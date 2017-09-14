@@ -39,7 +39,6 @@ void usage() {
           "Usage: ") +
           "WakeWordAgent -e <engine_type>\n" +
           " engine_type options:\n" +
-          " 'kitt_ai'\n" +
           " 'sensory'\n" +
           " 'gpio'\n" +
           "WakeWordAgent [-h] [--help]\n" +
