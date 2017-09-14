@@ -24,9 +24,9 @@ ClientSecret=YOUR_CLIENT_SECRET_HERE
 # Your Country. Must be 2 characters!
 Country='US'
 # Your state. Must be 2 or more characters.
-State='WA'
+State='MA'
 # Your city. Cannot be blank.
-City='SEATTLE'
+City='Franklin'
 # Your organization name/company name. Cannot be blank.
 Organization='AVS_USER'
 # Your device serial number. Cannot be blank, but can be any combination of characters.
@@ -363,12 +363,10 @@ Samples_Loc=$Origin/samples
 Java_Client_Loc=$Samples_Loc/javaclient
 Wake_Word_Agent_Loc=$Samples_Loc/wakeWordAgent
 Companion_Service_Loc=$Samples_Loc/companionService
-Kitt_Ai_Loc=$Wake_Word_Agent_Loc/kitt_ai
 Sensory_Loc=$Wake_Word_Agent_Loc/sensory
 External_Loc=$Wake_Word_Agent_Loc/ext
 Locale="en-US"
 
-mkdir $Kitt_Ai_Loc
 mkdir $Sensory_Loc
 mkdir $External_Loc
 
@@ -456,9 +454,6 @@ sudo apt-get upgrade -yq
 echo "========== Installing Git ============"
 sudo apt-get install -y git
 
-echo "========== Getting the code for Kitt-Ai ==========="
-cd $Kitt_Ai_Loc
-git clone https://github.com/Kitt-AI/snowboy.git
 
 echo "========== Getting the code for Sensory ==========="
 cd $Sensory_Loc
@@ -497,14 +492,6 @@ echo "========== Installing OpenSSL and Generating Self-Signed Certificates ====
 sudo apt-get install -y openssl
 sudo ldconfig
 
-echo "========== Downloading and Building Port Audio Library needed for Kitt-Ai Snowboy =========="
-cd $Kitt_Ai_Loc/snowboy/examples/C++
-bash ./install_portaudio.sh
-sudo ldconfig
-cd $Kitt_Ai_Loc/snowboy/examples/C++
-make -j4
-sudo ldconfig
-cd $Origin
 
 echo "========== Generating ssl.cnf =========="
 if [ -f $Java_Client_Loc/ssl.cnf ]; then
@@ -560,15 +547,6 @@ mkdir $External_Loc/include
 mkdir $External_Loc/lib
 mkdir $External_Loc/resources
 
-cp $Kitt_Ai_Loc/snowboy/include/snowboy-detect.h $External_Loc/include/snowboy-detect.h
-cp $Kitt_Ai_Loc/snowboy/examples/C++/portaudio/install/include/portaudio.h $External_Loc/include/portaudio.h
-cp $Kitt_Ai_Loc/snowboy/examples/C++/portaudio/install/include/pa_ringbuffer.h $External_Loc/include/pa_ringbuffer.h
-cp $Kitt_Ai_Loc/snowboy/examples/C++/portaudio/install/include/pa_util.h $External_Loc/include/pa_util.h
-cp $Kitt_Ai_Loc/snowboy/lib/$OS/libsnowboy-detect.a $External_Loc/lib/libsnowboy-detect.a
-cp $Kitt_Ai_Loc/snowboy/examples/C++/portaudio/install/lib/libportaudio.a $External_Loc/lib/libportaudio.a
-cp $Kitt_Ai_Loc/snowboy/resources/common.res $External_Loc/resources/common.res
-cp $Kitt_Ai_Loc/snowboy/resources/alexa/alexa-avs-sample-app/alexa.umdl $External_Loc/resources/alexa.umdl
-
 sudo ln -s /usr/lib/atlas-base/atlas/libblas.so.3 $External_Loc/lib/libblas.so.3
 
 $Sensory_Loc/alexa-rpi/bin/sdk-license file $Sensory_Loc/alexa-rpi/config/license-key.txt $Sensory_Loc/alexa-rpi/lib/libsnsr.a $Sensory_Loc/alexa-rpi/models/spot-alexa-rpi-20500.snsr $Sensory_Loc/alexa-rpi/models/spot-alexa-rpi-21000.snsr $Sensory_Loc/alexa-rpi/models/spot-alexa-rpi-31000.snsr
@@ -605,7 +583,6 @@ echo "Run the AVS Java Client: cd $Java_Client_Loc && mvn exec:exec"
 if [ "$Wake_Word_Detection_Enabled" = "true" ]; then
   echo "Run the wake word agent: "
   echo "  Sensory: cd $Wake_Word_Agent_Loc/src && ./wakeWordAgent -e sensory"
-  echo "  KITT_AI: cd $Wake_Word_Agent_Loc/src && ./wakeWordAgent -e kitt_ai"
   echo "  GPIO: PLEASE NOTE -- If using this option, run the wake word agent as sudo:"
   echo "  cd $Wake_Word_Agent_Loc/src && sudo ./wakeWordAgent -e gpio"
 fi
