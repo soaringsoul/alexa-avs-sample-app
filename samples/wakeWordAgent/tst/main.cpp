@@ -14,7 +14,6 @@
 #include <iostream>
 
 #include "testLogger.h"
-#include "testKittAi.h"
 #include "testSensory.h"
 #include "testIPCFactory.h"
 #include "testGPIO.h"
@@ -33,11 +32,6 @@ int main() {
 
   std::cout << " **** Logging tests passed ok ****" << std::endl;
 
-  // kitt-ai
-  if(!testKittAi()) {
-    std::cout << "ERROR testing kitt-ai functionality" << std::endl;
-    return 0;
-  }
 
   std::cout << " **** Kitt-ai tests passed ok ****" << std::endl;
 
