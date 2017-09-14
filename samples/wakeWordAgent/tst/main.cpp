@@ -32,9 +32,6 @@ int main() {
 
   std::cout << " **** Logging tests passed ok ****" << std::endl;
 
-
-  std::cout << " **** Kitt-ai tests passed ok ****" << std::endl;
-
   // sensory
   if(!testSensory()) {
     std::cout << "ERROR testing sensory functionality" << std::endl;
