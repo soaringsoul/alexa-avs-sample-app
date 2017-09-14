@@ -5,7 +5,6 @@ project(wakeWordAgentTest)
 set( WAKE_WORD_AGENT_TEST_SOURCE
         main.cpp
         testLogger.cpp
-        testKittAi.cpp
         testIPCFactory.cpp
         testSensory.cpp
         testGPIO.cpp
@@ -24,7 +23,6 @@ set( WAKE_WORD_AGENT_TEST_SOURCE
         ../src/WakeWordIPCSocket.cpp )
 
 set( WAKE_WORD_AGENT_TEST_LIBS
-        snowboy-detect
         blas
         portaudio
         asound
@@ -43,10 +41,6 @@ target_include_directories( wakeWordAgentTest PRIVATE ${CMAKE_SOURCE_DIR}/../ext
 
 target_link_libraries( wakeWordAgentTest ${WAKE_WORD_AGENT_TEST_LIBS} )
 target_link_libraries( wakeWordAgentTest ${CMAKE_THREAD_LIBS_INIT} )
-
-add_library( snowboy-detect STATIC IMPORTED )
-set_target_properties( snowboy-detect PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_SOURCE_DIR}/../ext/lib/libsnowboy-detect.a )
 
 add_library( portaudio STATIC IMPORTED )
 set_target_properties( portaudio PROPERTIES IMPORTED_LOCATION
